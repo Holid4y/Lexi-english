@@ -1,0 +1,10 @@
+{
+    "name": "Lexi",
+    "short_name": "Lexi",
+    "description": "Загружайте, читайте, повторяйте английские слова вместе с Lexi",
+    "start_url": "/",
+    "display": "fullscreen",
+    "background_color": "#2B2841",
+    "theme_color": "#2B2841"
+  }
+  
