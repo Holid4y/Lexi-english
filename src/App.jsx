@@ -59,7 +59,6 @@ function App() {
             document.documentElement.setAttribute("data-bs-theme", theme);
             return;
         }
-
         // Если хранилище пустое и у пользователя нет темы, то устанавливаем тему в зависимости от системной настройки
         if (storedTheme == null & theme == null) {
             
@@ -97,6 +96,7 @@ function MainComponent({ dispatch, theme }) {
     const location = useLocation();
 
     useEffect(() => {
+        const token = localStorage.getItem("access");
         const currentPath = location.pathname;
 
         const publicPaths = ["/login", "/register", "/landing", "/forgot-password", "/send-reset-password"];
