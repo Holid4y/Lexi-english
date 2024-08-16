@@ -99,13 +99,17 @@ function MainComponent({ dispatch, theme }) {
 
     useEffect(() => {
         const token = localStorage.getItem("access");
-        if (!token) {
+        const currentPath = location.pathname;
+
+        const publicPaths = ["/login", "/register", "/landing", "/forgot-password", "/send-reset-password"];
+        
+        if (!publicPaths.includes(currentPath) && !token) {
             navigate('/login');
-        } else {
+        } else if (!publicPaths.includes(currentPath)) {
             dispatch(checkAccessTokenValidity());
             dispatch(fetchSettings());
         }
-    }, [dispatch, navigate]);
+    }, [dispatch, navigate, location]);
 
     useEffect(() => {
         // ... код для установки темы
