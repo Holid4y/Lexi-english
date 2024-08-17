@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { checkAccessTokenValidity } from "./common/reducers/authSlice";
 import { fetchSettings } from "./common/reducers/userSlice";
-
 import { NotificationProvider } from "./common/components/Notification/NotificationContext";
 
-import Navigation from "./common/components/Navigation";
+import Navigation from "./common/components/Navigation/Navigation";
 import Home from "./pages/home/Home";
 
 import BookList from "./pages/books/BookList";
