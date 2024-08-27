@@ -1,27 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-
 import { throwUser } from "../../../common/reducers/userSlice";
 import { host, reset_password_confirm, getResponse } from "../../../../public/urls";
 import { Link } from "react-router-dom";
-
-import Header from "../common/Header"
-import RegistrationSmallBlock from "../register/components/RegistrationSmallBlock";
 import Input from "../common/Input";
 import SubmitButton from "../common/SubmitButton";
-import Loading from "../../../common/components/Treatment/Loading";
 
 const ForgotPass = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const [rePassword, setRePassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
-
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-
     const { uid, token } = useParams();
 
 
@@ -52,34 +44,10 @@ const ForgotPass = () => {
         localStorage.removeItem("access");
         localStorage.removeItem("refresh");
         dispatch(throwUser()); 
-        navigate("/login"); // Переход на страницу логина
+        navigate("/login");
     };
 
     return (
-        // <div className="body-auth position-relative">
-        //     <Header />
-        //     <main className="form-signin w-100 m-auto">
-        //         <form>
-        //             <h2 className="my-5 text-center">Востановление пароля</h2>
-        //             <div className="mb-4">
-        //                 <Input htmlFor={"newPassword"} label={"Новый пароль"} type={"password"} value={newPassword} setter={setNewPassword} />
-        //                 <Input htmlFor={"rePassword"} label={"Повторите пароль"} type={"password"} value={rePassword} setter={setRePassword} />
-
-        //                 <RegistrationSmallBlock />
-        //             </div>
-
-        //             {loading && <Loading />}
-        //             {message && (
-        //                 <div className="alert alert-success">
-        //                     {message}
-        //                 </div>
-        //             )}
-
-        //             <SubmitButton text={'Изменить пароль'} handle={handleSubmit} />
-        //         </form>
-        //     </main>
-        // </div>
-
         <div className="d-flex text-center text-bg-dark main-box">
             <div className="container d-flex w-100 h-100 p-3 mx-auto flex-column" >
                 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-auto">
