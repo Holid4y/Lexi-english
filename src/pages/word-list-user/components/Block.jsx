@@ -6,43 +6,41 @@ function Block({ item }) {
     const dispatch = useDispatch();
 
     function handleBlockClick(wordPk) {
-        console.log(wordPk)
         dispatch(toggleWordBlock());
         dispatch(fetchWordGet(wordPk));
         dispatch(setReletedPk(wordPk))
     }
 
-    function getAverageLevel(trainingList) {
-        if (trainingList.length === 0) {
-            return 0; 
-        }
-        const totalLevel = trainingList.reduce((sum, item) => sum + item.lvl, 0);
-        return Math.round(totalLevel / trainingList.length);
+    function getRoundLevel() {
+        return Math.round(item.lvl_sum);
     }
 
-    const cardClass = `card card-btn statistic-block d-flex flex-column justify-content-center align-items-center position-relative ${
-        item.is_many ? 'statistic-block-many' : ''
-    }`;
+    const cardClass = `card card-btn statistic-block d-flex flex-column justify-content-center align-items-center position-relative
+    ${item.is_many ? 'main-card' : ''}`;
 
     return (
-        <div className="col animated-card-scale">
-            <div role="button" onClick={() => handleBlockClick(item.word.pk)}>
+        <div className="col animated-card-scale position-relative">
+            <div role="button" onClick={() => handleBlockClick(item.word_id)} className="position-relative h-100">
+                {item.is_many && <div className="card statistic-block-many"></div>}
                 <div className={cardClass}>
-                    <h4 className="text-center pb-0 mb-0">{item.word.text}</h4>
-                    <span className="text-center p-0">{item.word.form}</span>
-                    <div className="position-absolute bottom-0 start-0 ms-2 mb-2">
-                        <span className="d-block">[{item.word.transcription}]</span>
-                        {/* <span className="d-block">{word.part_of_speech}</span> */}
+                    <h4 className="text-center pb-0 mb-0">{item.word_text}</h4>
+                    <span className="text-center p-0 text-warning">{item.word_form}</span>
+                    <div className="word_transcription p-0 m-0">
+                        <span>[{item.word_transcription}]</span>
                     </div>
-                    <div className="card_block_lvl">
-                        <p className="card_block_lvl_span">
-                            {`${getAverageLevel(item.training)} lvl`} 
-                        </p>
+                    <div className="card-left">
+                        <div className="card_block_lvl">
+                            <p className="card_block_lvl_span">
+                                <b>{`${getRoundLevel()} lvl`}</b>
+                            </p>
+                        </div>
+                        <div>
+                            <span className="ps-2">{item.part_of_speech}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
 

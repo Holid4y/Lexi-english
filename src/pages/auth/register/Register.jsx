@@ -3,6 +3,7 @@ import { fetchRegistration } from "../../../common/reducers/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../../common/components/Notification/NotificationContext";
+import { Link } from "react-router-dom";
 import Loading from "../../../common/components/Treatment/Loading";
 import Header from "../common/Header";
 import Input from "../common/Input";
@@ -23,7 +24,7 @@ const Register = () => {
     useEffect(() => {
         if (error) {
             const formattedErrors = Object.entries(error)
-                .map(([field, messages]) =>`${field}: ${messages.join(', ')}`)
+                .map(([field, messages]) =>`${field}: ${messages?.join(', ')}`)
                 .join('<br>');
     
             addNotification(
@@ -63,27 +64,48 @@ const Register = () => {
     };
 
     return (
-        <div className="body-auth position-relative">
-            <Header />
-            
-            <main className="form-signin w-100 m-auto">
-                <form>
-                    <h2 className="my-5 text-center">Регистрация</h2>
-                    <div className="mb-4">
-                        <Input htmlFor={"login"} label={"Логин"} type={"text"} value={username} setter={setUsername} />
-                        <Input htmlFor={"email"} label={"Email"} type={"email"} value={email} setter={setEmail} />
-                        <Input htmlFor={"password"} label={"Пароль"} type={"password"} value={password} setter={setPassword} />
-                        <Input htmlFor={"password2"} label={"Повторите пароль"} type={"password"} value={rePassword} setter={setRePassword} />
-
-                        <RegistrationSmallBlock />
+        <div className="d-flex text-center text-bg-dark main-box">
+            <div className="container d-flex w-100 h-100 p-3 mx-auto flex-column" >
+                <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between mb-auto">
+                    <div class="col-md-4 mb-2 mb-md-0 d-none d-md-block">
+                        <h3 className="float-md-start mb-0">Lexi</h3>
                     </div>
 
-                    {loading && <Loading />}
-                    {errorState && errorState}
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><Link to="/landing" class="nav-link px-2 link-secondary">Главная</Link></li>
+                        <li><Link to="/instruction" class="nav-link px-2 link-secondary">Интерактив</Link></li>
+                        <li><Link to="/about" class="nav-link px-2 link-secondary">О нас</Link></li>
+                    </ul>
 
-                    <SubmitButton text={"Регистрация"} handle={handleRegistration} />
-                </form>
-            </main>
+                    <div class="col-md-4 text-end">
+                        <Link to="/login" class="btn btn-outline-primary me-2">Вход</Link>
+                        <Link to="/register" class="btn btn-primary">Регистрация</Link>
+                    </div>
+                </header>
+
+                <div className="container-main position-relative">
+                    <div className="auth">
+                        <div className="form-container">
+                            <form>
+                                <h1 className="mb-5">Регистрация</h1>
+                                <span>используйте свою почту для регистрации</span>
+                                <Input htmlFor={"login"} label={"Логин"} type={"text"} value={username} setter={setUsername} />
+                                <Input htmlFor={"email"} label={"Email"} type={"email"} value={email} setter={setEmail} />
+                                <div className="row">
+                                    <div className="col-12 col-md-6"><Input htmlFor={"password"} label={"Пароль"} type={"password"} value={password} setter={setPassword} /></div>
+                                    <div className="col-12 col-md-6"><Input htmlFor={"password2"} label={"Повторите пароль"} type={"password"} value={rePassword} setter={setRePassword} /></div>
+                                </div>
+                                <p className="py-0 my-0"><span className="text-secondary pe-2">Уже зарегистрированы?</span><Link className="link" to="/login">Войти</Link></p>
+                                <SubmitButton text={"Регистрация"} handle={handleRegistration} />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <footer className="mt-auto text-white-50">
+                    <p>Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" className="text-white">@mdo</a>.</p>
+                </footer>
+            </div>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMyBooks } from "../../common/reducers/booksSlice";
 
@@ -15,13 +15,14 @@ import FileModal from "./components/AddBookComponents/AllModal/FileModal";
 import TextModal from "./components/AddBookComponents/AllModal/TextModal";
 import VideoModal from "./components/AddBookComponents/AllModal/VideoModal";
 
-import { searchMybook } from "../../../public/urls";
+import { myBooks as myBooksPath } from "../../../public/urls";
 
 function MyBookList() {
     const dispatch = useDispatch();
     const { books, loading } = useSelector((state) => state.books);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchResults, setSearchResults] = useState(null);
+    const [file, setFile] = useState(null);  // Добавляем состояние для файла
 
     useEffect(() => {
         if (!searchResults) {
@@ -82,7 +83,7 @@ function MyBookList() {
 
     return (
         <div className="align-items-center">
-            <Search title="Мои книги" endpoint={searchMybook} onSearch={handleSearchResults} onClear={handleClearSearch} />
+            <Search title="Мои книги" endpoint={myBooksPath} onSearch={handleSearchResults} onClear={handleClearSearch} />
             {loading ? (
                 <Loading />
             ) : (
@@ -93,7 +94,7 @@ function MyBookList() {
                         <AddBookModal />
                         <BaseModal
                             idName={"AddBookModalFile"}
-                            childComponent={<FileModal />}
+                            childComponent={<FileModal file={file} setFile={setFile} />}
                             ariaLabelledby={"AddBookModalFileSelected"}
                             title={"Файл"}
                         />

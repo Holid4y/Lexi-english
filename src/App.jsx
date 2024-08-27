@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate  } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { checkAccessTokenValidity } from "./common/reducers/authSlice";
@@ -8,16 +8,13 @@ import { NotificationProvider } from "./common/components/Notification/Notificat
 
 import Navigation from "./common/components/Navigation/Navigation";
 import Home from "./pages/home/Home";
-
 import BookList from "./pages/books/BookList";
 import BookRetrieve from "./pages/book-retrieve/BookRetrieve";
 import BookmarkList from "./pages/bookmark-list/BookmarkList";
-import MyBookList from "./pages/my-books/MyBookList"
-
+import MyBookList from "./pages/my-books/MyBookList";
 import Recognize from "./pages/training/recognize/Recognize";
 import Reproduce from "./pages/training/reproduce/Reproduce";
 import Training from "./pages/training/Training";
-
 import Login from "./pages/auth/login/Login";
 import Register from "./pages/auth/register/Register";
 import ChangePass from "./pages/auth/changepass/ChangePass";
@@ -25,13 +22,13 @@ import ForgotPass from "./pages/auth/forgotpass/ForgotPass";
 import SendResetPassword from "./pages/auth/forgotpass/SendResetPassword";
 import ChangeEmail from "./pages/auth/change-email/ChangeEmail";
 import ActivationEmail from "./pages/auth/activation-email/ActivationEmail";
-
 import Profile from "./pages/profile/ProfileUser";
-import LevelSettings from "./pages/levels-settings/levelSettings"
+import LevelSettings from "./pages/levels-settings/levelSettings";
 import WordList from "./pages/word-list-user/WordList";
 import Statistic from "./pages/statistic-user/Statistic";
-import LandingMain from "./pages/landing/LandingMain";
-
+import Landing from "./pages/landing/Landing";
+import Instruction from "./pages/landing/InformationUsing";
+import About from "./pages/landing/About";
 
 function App() {
     const dispatch = useDispatch();
@@ -42,33 +39,29 @@ function App() {
         else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) { return "light"; } 
         else { return "dark"; }
     }
+
     useEffect(() => {
         dispatch(checkAccessTokenValidity());
         dispatch(fetchSettings());
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme");
         document.documentElement.setAttribute("data-bs-theme", storedTheme);
 
         if (theme !== null) {
-            // Если есть настройки пользователя, то устанавливаем их и сохраняем в локальном хранилище
             localStorage.setItem("theme", theme);
-            console.log(theme, "theme !== null")
             document.documentElement.setAttribute("data-bs-theme", theme);
             return;
         }
-        // Если хранилище пустое и у пользователя нет темы, то устанавливаем тему в зависимости от системной настройки
-        if (storedTheme == null & theme == null) {
-            
+        
+        if (storedTheme == null && theme == null) {
             const systemTheme = getOSColorScheme();
             localStorage.setItem("theme", systemTheme);
-            console.log(systemTheme, "storedTheme == null & theme == null")
             document.documentElement.setAttribute("data-bs-theme", systemTheme);
         }
     }, [dispatch, theme]);
 
-    // Убирает стандартное поведение Tab на сайте
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === "Tab") {
@@ -96,20 +89,14 @@ function MainComponent({ dispatch, theme }) {
 
     useEffect(() => {
         const token = localStorage.getItem("access");
-        const currentPath = location.pathname;
-
-        const publicPaths = ["/login", "/register", "/landing", "/forgot-password", "/send-reset-password"];
+        const publicPaths = ["/login", "/register", "/landing", "/about", "/instruction", "/forgot-password", "/send-reset-password"];
         
-        if (!publicPaths.includes(currentPath) && !token) {
-            navigate('/login');
-        } else if (!publicPaths.includes(currentPath)) {
-            dispatch(checkAccessTokenValidity());
-            dispatch(fetchSettings());
+        if (!publicPaths.includes(location.pathname) && !token) {
+            navigate('/landing');
         }
     }, [dispatch, navigate, location]);
 
     useEffect(() => {
-        // ... код для установки темы
     }, [dispatch, theme]);
 
     return (
@@ -135,7 +122,10 @@ function MainComponent({ dispatch, theme }) {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/statistic" element={<Statistic />} />
                 <Route path="/level-settings" element={<LevelSettings />} />
-                <Route path="/landing" element={<LandingMain />} />
+                <Route path="/landing" element={<Landing />} />
+                <Route path="/instruction" element={<Instruction />} />
+                <Route path="/about" element={<About />} />
+                
                 {/* Другие маршруты */}
             </Routes>
         </div>
@@ -143,8 +133,29 @@ function MainComponent({ dispatch, theme }) {
 }
 
 function ConditionalNavigation({ location }) {
-    const hideNavigationPaths = ["/login", "/register", "/landing", "/forgot-password", "/send-reset-password"];
-    return hideNavigationPaths.includes(location.pathname) ? null : <Navigation />;
+    const hideNavigationPaths = [
+        "/login", 
+        "/register", 
+        "/landing", 
+        "/forgot-password", 
+        "/send-reset-password", 
+        "/instruction",
+        "/about"
+    ];
+
+    // Проверка на статичные маршруты
+    if (hideNavigationPaths.includes(location.pathname)) {
+        return null;
+    }
+
+    // Проверка на динамические маршруты
+    const isForgotPasswordPath = location.pathname.startsWith("/forgot-password/");
+
+    if (isForgotPasswordPath) {
+        return null;
+    }
+
+    return <Navigation />;
 }
 
 export default App;

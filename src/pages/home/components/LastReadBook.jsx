@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import SVG from "../../../common/components/Icons/SVG";
 
 function LastReadBook() {
@@ -40,21 +40,21 @@ function LastReadBook() {
             <div className="hover-text-opacity animated-block-leftright">
                 <p className="w-100 mb-0 d-flex justify-content-between px-2">
                     <span className="span_hover">Вы читали ранее</span>
-                    <Link to={continueReadingUrl} className="text-end ms-auto link-color span_hover">
+                    <span className="text-end ms-auto link-color span_hover p-0 m-0 mb-1">
                         Продолжить
                         <SVG name={"arrow_right"} />
-                    </Link>
+                    </span>
                 </p>
-                <div className="card text-end mb-3 w-100 bg-card-dark p-2 animated-block-rightleft">
+                <div className="card text-end mb-3 w-100 bg-card-dark animated-block-rightleft">
                     <div className="card-body">
                         <div className="row">
                             <div className="col-8">
-                                <div className="text-start text-break mb-4">
+                                <div className="text-start text-truncate w-100 mb-3 ">
                                     <h3 className="card-title">{titleLastBook}</h3>
                                 </div>
                             </div>
                             <div className="col-4">
-                                <div className="text-end text-break mb-4 px-0">
+                                <div className="text-end text-truncate w-100 mb-3  px-0">
                                     <span>{pageLastBook} страница</span>
                                 </div>
                             </div>

@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setIsPrivet } from "../../../../../common/reducers/addBookModalSlice";
 
 function IsPrivetButton() {
+    const dispatch = useDispatch();
     const handleToggle = (event) => {
         const isChecked = event.target.checked;
-        // Здесь вы можете обработать изменение состояния чекбокса
-        console.log(isChecked ? "Книга приватная" : "Книга публичная");
+        dispatch(setIsPrivet(isChecked))
+        console.log(isChecked);
     };
 
     return (
@@ -17,7 +20,7 @@ function IsPrivetButton() {
                 onChange={handleToggle}
             />
             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-                Приватная книга / текст
+                Отображать только у меня
             </label>
         </div>
     );

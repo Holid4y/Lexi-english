@@ -1,9 +1,12 @@
-export const host = "https://lexi-service.onrender.com/api/";
+export const host = "http://127.0.0.1:8000/api/";
+// export const host = "https://lexi-service.onrender.com/api/";
 
 // books
 export const books = "books/";
-export const bookmarks = books + "bookmarks/";
 export const myBooks = books + 'my/'
+
+// bookmarks
+export const bookmarks = "bookmarks/";
 
 // JWT
 export const login = "jwt/create/";
@@ -19,7 +22,6 @@ export const settings = "users/settings/";
 // vocabulary
 export const vocabulary = "vocabulary/";
 export const _delete = "delete/"
-export const stats = vocabulary + "stats/";
 
 // words
 export const words = "words/";
@@ -42,30 +44,11 @@ export const changePassword = "users/set_password/"
 export const send_reset_password = 'users/reset_password/'
 export const reset_password_confirm = 'users/reset_password_confirm/'
 
-//Search
-export const search = 'search/'
-export const searchMybook = search + myBooks //Готово
-export const searchBook = search + books //Готово
-export const searchBookMark = search + "bookmarks/"
-export const searchVocabulary = search + vocabulary
+// stats
+export const stats = 'stats/'
+export const recently_words = 'recently-words/'
 
-// Эта функция полезна для получения значения определенного cookie
-// из браузера, а именно для csrf токена.
-export function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
+
 
 /**
  * Функция для проверки состояния ответа и возврата соответствующего значения.
@@ -94,13 +77,11 @@ export const renderResponse = (response, sceleton, loading, error, finaly) => {
 
 export let headers = {
     "Content-type": "application/json",
-    "X-CSRFToken": getCookie("csrftoken"),
 };
 
 export async function getResponse(url, method, body) {
     let headers = {
         "Content-type": "application/json",
-        "X-CSRFToken": getCookie("csrftoken"),
     };
 
     const accessToken = localStorage.getItem("access");
@@ -110,7 +91,6 @@ export async function getResponse(url, method, body) {
 
     const auth = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 
-    
     const response = await fetch(url.toString(), {
         method,
         headers: { ...headers, ...auth },

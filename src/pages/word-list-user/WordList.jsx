@@ -6,7 +6,8 @@ import Search from "../../common/components/Headers/Search";
 import Filter from "../../common/components/Headers/Filter";
 import Loading from "../../common/components/Treatment/Loading";
 import PaginationButton from "../../common/components/Pagination/PagePagination";
-import { searchVocabulary } from "../../../public/urls";
+
+import { vocabulary as vocabularyPath } from "../../../public/urls";
 
 function WordList() {
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ function WordList() {
   }, [dispatch, currentPage]);
 
   const handleSearchResults = (results) => {
-      console.log("Search results received:", results);
       if (Array.isArray(results) && results.length > 0) {
           setSearchResults(results);
       } else if (results && results.results && Array.isArray(results.results)) {
@@ -43,13 +43,13 @@ function WordList() {
 
   return (
     <div className="align-items-center">
-      <Search title="Все слова" endpoint={searchVocabulary} onSearch={handleSearchResults} onClear={handleClearSearch} />
-      {/* <Filter /> */}
+      <Search title="Все слова" endpoint={vocabularyPath} onSearch={handleSearchResults} onClear={handleClearSearch} />
+      <Filter />
       {loading ? (
         <Loading />
       ) : (
         <main className="container pb-5 mb-3">
-          <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-4 mb-5">
+          <div className="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-4 g-4 mb-5">
             {searchResults.length > 0 ? (
                 searchResults.map((item, index) => (
                     <Block item={item} key={index} />
