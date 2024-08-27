@@ -67,7 +67,6 @@ function AddButton({ file }) { // Получаем file через пропсы
                 // Ждем завершения fetchFormData и получения ответа
                 response = await fetchFormData();
             } else {
-                console.log("Написан текст");
                 const data = {
                     title: title,
                     author: authorName,

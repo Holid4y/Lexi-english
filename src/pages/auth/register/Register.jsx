@@ -43,22 +43,20 @@ const Register = () => {
             })
         )
             .then((response) => {
-                console.log("Ответ от сервера:", response);
-
                 if (response.meta.requestStatus === "fulfilled") {
                     if (response.payload) {
                         navigate("/login");
                     } else {
-                        console.log("Ошибка: Нет пользователя");
+                        // Нет пльзователя
                     }
                 } else if (response.meta.requestStatus === "rejected") {
-                    console.log("Ошибка: Запрос отклонен");
+                    // Запрос отклонен
                 }
             })
             .catch((error) => {
                 console.error("Ошибка при выполнении запроса:", error);
                 if (error.response && error.response.data) {
-                    console.error("Ошибка сервера:", error.response.data);
+                    // Ошибка сервера
                 }
             });
     };

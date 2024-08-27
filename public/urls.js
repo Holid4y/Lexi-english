@@ -71,10 +71,6 @@ export async function getResponse(url, method, body) {
         headers: { ...headers, ...auth },
         body,
     });
-
-    if (response.ok){
-        console.log(`${method} запрос на ${url}`);
-    }
         
     return response;
 }

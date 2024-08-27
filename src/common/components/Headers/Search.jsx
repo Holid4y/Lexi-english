@@ -30,7 +30,6 @@ function Search({ title, onSearch, onClear, endpoint }) {
                 } else {
                     console.warn("Отсутствует accessToken. Запрос на", fullUrl);
                 }
-                console.log(fullUrlWithParams)
                 const response = await fetch(fullUrlWithParams, {
                     method: "GET",
                     headers: headers

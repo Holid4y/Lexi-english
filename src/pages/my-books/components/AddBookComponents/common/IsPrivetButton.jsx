@@ -7,7 +7,6 @@ function IsPrivetButton() {
     const handleToggle = (event) => {
         const isChecked = event.target.checked;
         dispatch(setIsPrivet(isChecked))
-        console.log(isChecked);
     };
 
     return (

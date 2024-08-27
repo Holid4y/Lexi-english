@@ -43,12 +43,9 @@ export const fetchRegistration = createAsyncThunk("auth/fetchRegistration", asyn
             re_password
         }),
     });
-
-    console.log("Ответ сервера:", response);
     
     if (response.ok) {
-        const data = await response.json();    
-        console.log("Полученные данные:", data);
+        const data = await response.json();
         return data;
     } else if (response.status == 400) {
         const data = await response.json();
@@ -56,7 +53,6 @@ export const fetchRegistration = createAsyncThunk("auth/fetchRegistration", asyn
     } 
     
     else {
-        console.error("Ошибка при регистрации:", response.status, response.statusText);
         throw new Error(`Ошибка при регистрации: ${response.status} - ${response.statusText}`);
     }
 });
@@ -88,12 +84,8 @@ function checkResponseStatus(response) {
     if (response.status === 200) {
       return true;
     } else if (response.status === 401) {
-      // Обработка статуса 401
-      console.log('Ошибка авторизации (401)');
       return false;
     } else {
-      // Обработка других статусов ошибок
-      console.log(`Ошибка ${response.status}: ${response.statusText}`);
       return false;
     }
   }
