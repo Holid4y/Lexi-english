@@ -2,11 +2,8 @@ import React, { useState } from "react";
 
 import { host, send_reset_password, getResponse } from "../../../../public/urls";
 import { Link } from "react-router-dom";
-import Header from "../common/Header"
-import RegistrationSmallBlock from "../register/components/RegistrationSmallBlock";
 import Input from "../common/Input";
 import SubmitButton from "../common/SubmitButton";
-import Loading from "../../../common/components/Treatment/Loading";
 
 const SendResetPassword = () => {
 
