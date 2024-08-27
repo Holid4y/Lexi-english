@@ -126,7 +126,7 @@ export const checkAccessTokenValidity = () => async (dispatch) => {
             dispatch(setIsAuth(true));
         }
     } catch (error) {
-        console.error("Ошибка при декодировании токена:", error);
+        // Ошибка при декодировании токена
     }
 };
 
