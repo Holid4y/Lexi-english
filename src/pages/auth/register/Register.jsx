@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useNotification } from "../../../common/components/Notification/NotificationContext";
 import { Link } from "react-router-dom";
-import Loading from "../../../common/components/Treatment/Loading";
-import Header from "../common/Header";
 import Input from "../common/Input";
-import RegistrationSmallBlock from "./components/RegistrationSmallBlock";
 import SubmitButton from "../common/SubmitButton";
 
 const Register = () => {
@@ -18,7 +15,6 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
-    const [errorState, setErrorState] = useState(null);
     const { addNotification } = useNotification();
 
     useEffect(() => {
